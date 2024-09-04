@@ -1,5 +1,9 @@
 service : {
-  addMessage: (text) -> ();
-  clearMessages: () -> ();
-  getMessages: () -> (vec text) query;
+  addArticle: (text, text) -> ();
+  clearArticles: () -> ();
+  getArticle: (text) -> (opt text) query;
+  getArticles: () -> (vec record {
+                            text;
+                            text;
+                          }) query;
 }

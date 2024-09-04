@@ -1,8 +1,13 @@
 export const idlFactory = ({ IDL }) => {
   return IDL.Service({
-    'addMessage' : IDL.Func([IDL.Text], [], []),
-    'clearMessages' : IDL.Func([], [], []),
-    'getMessages' : IDL.Func([], [IDL.Vec(IDL.Text)], ['query']),
+    'addArticle' : IDL.Func([IDL.Text, IDL.Text], [], []),
+    'clearArticles' : IDL.Func([], [], []),
+    'getArticle' : IDL.Func([IDL.Text], [IDL.Opt(IDL.Text)], ['query']),
+    'getArticles' : IDL.Func(
+        [],
+        [IDL.Vec(IDL.Tuple(IDL.Text, IDL.Text))],
+        ['query'],
+      ),
   });
 };
 export const init = ({ IDL }) => { return []; };

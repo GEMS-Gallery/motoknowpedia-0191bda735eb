@@ -3,6 +3,43 @@
 @import 'tailwindcss/utilities';
 
 body {
-  font-family: 'Roboto', sans-serif;
-  background-color: #f0f4f8;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Lato', 'Helvetica', 'Arial', sans-serif;
+  background-color: #f8f9fa;
+  color: #202122;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Linux Libertine', 'Georgia', 'Times', serif;
+  border-bottom: 1px solid #a2a9b1;
+  padding-bottom: 0.25em;
+  margin-top: 1em;
+}
+
+.wiki-content {
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+.wiki-sidebar {
+  background-color: #f8f9fa;
+  border-right: 1px solid #a2a9b1;
+}
+
+.wiki-header {
+  background-color: #eaecf0;
+  border-bottom: 1px solid #a2a9b1;
+}
+
+.wiki-search input {
+  background-color: #fff;
+  border: 1px solid #a2a9b1;
+}
+
+.wiki-link {
+  color: #0645ad;
+  text-decoration: none;
+}
+
+.wiki-link:hover {
+  text-decoration: underline;
 }
