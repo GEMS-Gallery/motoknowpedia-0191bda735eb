@@ -7,6 +7,7 @@ export interface _SERVICE {
   'clearArticles' : ActorMethod<[], undefined>,
   'getArticle' : ActorMethod<[string], [] | [string]>,
   'getArticles' : ActorMethod<[], Array<[string, string]>>,
+  'searchArticles' : ActorMethod<[string], Array<[string, string]>>,
 }
 export declare const idlFactory: IDL.InterfaceFactory;
 export declare const init: (args: { IDL: typeof IDL }) => IDL.Type[];

@@ -31,6 +31,10 @@ h1, h2, h3, h4, h5, h6 {
   border-bottom: 1px solid #a2a9b1;
 }
 
+.wiki-search {
+  padding: 10px;
+}
+
 .wiki-search input {
   background-color: #fff;
   border: 1px solid #a2a9b1;

@@ -28,6 +28,15 @@ actor {
     )
   };
 
+  // Function to search articles
+  public query func searchArticles(searchTerm : Text) : async [(Text, Text)] {
+    Array.filter<(Text, Text)>(articles, func (article) {
+      let (title, content) = article;
+      Text.contains(Text.toLowercase(title), #text(Text.toLowercase(searchTerm))) or
+      Text.contains(Text.toLowercase(content), #text(Text.toLowercase(searchTerm)))
+    })
+  };
+
   // Function to clear all articles
   public func clearArticles() : async () {
     articles := [];

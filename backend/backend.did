@@ -6,4 +6,8 @@ service : {
                             text;
                             text;
                           }) query;
+  searchArticles: (text) -> (vec record {
+                                   text;
+                                   text;
+                                 }) query;
 }

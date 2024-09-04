@@ -9,10 +9,19 @@ const App: React.FC = () => {
   const [newContent, setNewContent] = useState('');
   const [loading, setLoading] = useState(false);
   const [selectedArticle, setSelectedArticle] = useState<[string, string] | null>(null);
+  const [searchQuery, setSearchQuery] = useState('');
 
   useEffect(() => {
     fetchArticles();
   }, []);
+
+  useEffect(() => {
+    if (searchQuery) {
+      searchArticles(searchQuery);
+    } else {
+      fetchArticles();
+    }
+  }, [searchQuery]);
 
   const fetchArticles = async () => {
     setLoading(true);
@@ -21,6 +30,17 @@ const App: React.FC = () => {
       setArticles(fetchedArticles);
     } catch (error) {
       console.error('Error fetching articles:', error);
+    }
+    setLoading(false);
+  };
+
+  const searchArticles = async (query: string) => {
+    setLoading(true);
+    try {
+      const searchResults = await backend.searchArticles(query);
+      setArticles(searchResults);
+    } catch (error) {
+      console.error('Error searching articles:', error);
     }
     setLoading(false);
   };
@@ -56,6 +76,10 @@ const App: React.FC = () => {
     setSelectedArticle(article);
   };
 
+  const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setSearchQuery(event.target.value);
+  };
+
   return (
     <div className="wiki-layout">
       <AppBar position="fixed" className="wiki-header">
@@ -63,16 +87,6 @@ const App: React.FC = () => {
           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
             Wikipedia-like Message Board
           </Typography>
-          <div className="wiki-search">
-            <TextField
-              placeholder="Search..."
-              variant="outlined"
-              size="small"
-              InputProps={{
-                startAdornment: <SearchIcon />,
-              }}
-            />
-          </div>
         </Toolbar>
       </AppBar>
       <Grid container>
@@ -91,6 +105,19 @@ const App: React.FC = () => {
               },
             }}
           >
+            <div className="wiki-search">
+              <TextField
+                placeholder="Search articles..."
+                variant="outlined"
+                size="small"
+                fullWidth
+                value={searchQuery}
+                onChange={handleSearchChange}
+                InputProps={{
+                  startAdornment: <SearchIcon />,
+                }}
+              />
+            </div>
             <List>
               {articles.map((article, index) => (
                 <ListItem button key={index} onClick={() => handleSelectArticle(article)}>
