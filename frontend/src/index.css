@@ -18,6 +18,7 @@ h1, h2, h3, h4, h5, h6 {
 .wiki-content {
   font-size: 14px;
   line-height: 1.6;
+  padding-left: 20px;
 }
 
 .wiki-sidebar {
@@ -42,4 +43,9 @@ h1, h2, h3, h4, h5, h6 {
 
 .wiki-link:hover {
   text-decoration: underline;
+}
+
+.main-content {
+  margin-top: 64px;
+  padding-top: 20px;
 }

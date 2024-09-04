@@ -58,7 +58,7 @@ const App: React.FC = () => {
 
   return (
     <div className="wiki-layout">
-      <AppBar position="static" className="wiki-header">
+      <AppBar position="fixed" className="wiki-header">
         <Toolbar>
           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
             Wikipedia-like Message Board
@@ -87,10 +87,10 @@ const App: React.FC = () => {
               '& .MuiDrawer-paper': {
                 width: 240,
                 boxSizing: 'border-box',
+                marginTop: '64px',
               },
             }}
           >
-            <Toolbar />
             <List>
               {articles.map((article, index) => (
                 <ListItem button key={index} onClick={() => handleSelectArticle(article)}>
@@ -101,7 +101,7 @@ const App: React.FC = () => {
           </Drawer>
         </Grid>
         <Grid item xs={9}>
-          <Container className="wiki-content" maxWidth="md">
+          <Container className="wiki-content main-content" maxWidth="md">
             {loading ? (
               <CircularProgress />
             ) : selectedArticle ? (
