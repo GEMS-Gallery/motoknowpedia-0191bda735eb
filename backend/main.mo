@@ -1,3 +1,4 @@
+import Bool "mo:base/Bool";
 import Func "mo:base/Func";
 
 import Debug "mo:base/Debug";
@@ -35,6 +36,20 @@ actor {
       Text.contains(Text.toLowercase(title), #text(Text.toLowercase(searchTerm))) or
       Text.contains(Text.toLowercase(content), #text(Text.toLowercase(searchTerm)))
     })
+  };
+
+  // Function to update an existing article
+  public func updateArticle(title : Text, newContent : Text) : async Bool {
+    let index = Array.indexOf<(Text, Text)>((title, ""), articles, func(a, b) { a.0 == b.0 });
+    switch (index) {
+      case (null) { false };
+      case (?i) {
+        articles := Array.tabulate<(Text, Text)>(articles.size(), func (j) {
+          if (j == i) { (title, newContent) } else { articles[j] }
+        });
+        true
+      };
+    }
   };
 
   // Function to clear all articles

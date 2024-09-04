@@ -13,6 +13,7 @@ export const idlFactory = ({ IDL }) => {
         [IDL.Vec(IDL.Tuple(IDL.Text, IDL.Text))],
         ['query'],
       ),
+    'updateArticle' : IDL.Func([IDL.Text, IDL.Text], [IDL.Bool], []),
   });
 };
 export const init = ({ IDL }) => { return []; };

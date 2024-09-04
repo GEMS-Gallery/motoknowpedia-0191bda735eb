@@ -10,4 +10,5 @@ service : {
                                    text;
                                    text;
                                  }) query;
+  updateArticle: (text, text) -> (bool);
 }

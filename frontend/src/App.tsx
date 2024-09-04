@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { backend } from 'declarations/backend';
-import { AppBar, Toolbar, Typography, TextField, Button, List, ListItem, ListItemText, CircularProgress, Drawer, Container, Grid } from '@mui/material';
+import { AppBar, Toolbar, Typography, TextField, Button, List, ListItem, ListItemText, CircularProgress, Drawer, Container } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
 
 const App: React.FC = () => {
@@ -10,6 +10,8 @@ const App: React.FC = () => {
   const [loading, setLoading] = useState(false);
   const [selectedArticle, setSelectedArticle] = useState<[string, string] | null>(null);
   const [searchQuery, setSearchQuery] = useState('');
+  const [editMode, setEditMode] = useState(false);
+  const [editContent, setEditContent] = useState('');
 
   useEffect(() => {
     fetchArticles();
@@ -74,10 +76,42 @@ const App: React.FC = () => {
 
   const handleSelectArticle = (article: [string, string]) => {
     setSelectedArticle(article);
+    setEditMode(false);
+    setEditContent(article[1]);
   };
 
   const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setSearchQuery(event.target.value);
+  };
+
+  const handleEditClick = () => {
+    setEditMode(true);
+  };
+
+  const handleSaveEdit = async () => {
+    if (selectedArticle && editContent.trim()) {
+      setLoading(true);
+      try {
+        const success = await backend.updateArticle(selectedArticle[0], editContent);
+        if (success) {
+          setSelectedArticle([selectedArticle[0], editContent]);
+          setEditMode(false);
+          await fetchArticles();
+        } else {
+          console.error('Failed to update article');
+        }
+      } catch (error) {
+        console.error('Error updating article:', error);
+      }
+      setLoading(false);
+    }
+  };
+
+  const handleCancelEdit = () => {
+    setEditMode(false);
+    if (selectedArticle) {
+      setEditContent(selectedArticle[1]);
+    }
   };
 
   return (
@@ -130,17 +164,36 @@ const App: React.FC = () => {
           ) : selectedArticle ? (
             <div className="wiki-article">
               <h1>{selectedArticle[0]}</h1>
-              <div className="wiki-toc">
-                <div className="wiki-toc-title">Contents</div>
-                <ul>
-                  <li><a href="#section1">1. Section 1</a></li>
-                  <li><a href="#section2">2. Section 2</a></li>
-                </ul>
-              </div>
-              <p>{selectedArticle[1]}</p>
-              <div className="wiki-edit-history">
-                <a href="#">Edit</a> | <a href="#">View history</a>
-              </div>
+              {editMode ? (
+                <div className="edit-mode">
+                  <textarea
+                    value={editContent}
+                    onChange={(e) => setEditContent(e.target.value)}
+                  />
+                  <div className="edit-buttons">
+                    <Button onClick={handleSaveEdit} variant="contained" color="primary">
+                      Save
+                    </Button>
+                    <Button onClick={handleCancelEdit} variant="outlined">
+                      Cancel
+                    </Button>
+                  </div>
+                </div>
+              ) : (
+                <>
+                  <div className="wiki-toc">
+                    <div className="wiki-toc-title">Contents</div>
+                    <ul>
+                      <li><a href="#section1">1. Section 1</a></li>
+                      <li><a href="#section2">2. Section 2</a></li>
+                    </ul>
+                  </div>
+                  <p>{selectedArticle[1]}</p>
+                  <div className="wiki-edit-history">
+                    <a href="#" onClick={handleEditClick}>Edit</a> | <a href="#">View history</a>
+                  </div>
+                </>
+              )}
             </div>
           ) : (
             <div>

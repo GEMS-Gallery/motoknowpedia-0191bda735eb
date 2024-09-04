@@ -117,3 +117,15 @@ h1, h2, h3, h4, h5, h6 {
 .wiki-edit-history a:hover {
   text-decoration: underline;
 }
+
+.edit-mode textarea {
+  width: 100%;
+  min-height: 300px;
+  margin-bottom: 10px;
+}
+
+.edit-buttons {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+}
