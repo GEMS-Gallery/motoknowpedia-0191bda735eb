@@ -85,100 +85,105 @@ const App: React.FC = () => {
       <AppBar position="fixed" className="wiki-header">
         <Toolbar>
           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-            Wikipedia-like Message Board
+            <a href="/" className="wiki-logo">Wikipedia-like Message Board</a>
           </Typography>
+          <div className="wiki-search">
+            <TextField
+              placeholder="Search articles..."
+              variant="outlined"
+              size="small"
+              value={searchQuery}
+              onChange={handleSearchChange}
+              InputProps={{
+                startAdornment: <SearchIcon />,
+              }}
+            />
+          </div>
         </Toolbar>
       </AppBar>
-      <Grid container>
-        <Grid item xs={3}>
-          <Drawer
-            variant="permanent"
-            anchor="left"
-            className="wiki-sidebar"
-            sx={{
-              width: 240,
-              flexShrink: 0,
-              '& .MuiDrawer-paper': {
-                width: 240,
-                boxSizing: 'border-box',
-                marginTop: '64px',
-              },
-            }}
-          >
-            <div className="wiki-search">
-              <TextField
-                placeholder="Search articles..."
-                variant="outlined"
-                size="small"
-                fullWidth
-                value={searchQuery}
-                onChange={handleSearchChange}
-                InputProps={{
-                  startAdornment: <SearchIcon />,
-                }}
-              />
+      <Drawer
+        variant="permanent"
+        anchor="left"
+        className="wiki-sidebar"
+        sx={{
+          width: 200,
+          flexShrink: 0,
+          '& .MuiDrawer-paper': {
+            width: 200,
+            boxSizing: 'border-box',
+            marginTop: '64px',
+          },
+        }}
+      >
+        <List>
+          {articles.map((article, index) => (
+            <ListItem button key={index} onClick={() => handleSelectArticle(article)}>
+              <ListItemText primary={article[0]} className="wiki-link" />
+            </ListItem>
+          ))}
+        </List>
+      </Drawer>
+      <main className="main-content">
+        <Container className="wiki-content" maxWidth="md">
+          {loading ? (
+            <CircularProgress />
+          ) : selectedArticle ? (
+            <div className="wiki-article">
+              <h1>{selectedArticle[0]}</h1>
+              <div className="wiki-toc">
+                <div className="wiki-toc-title">Contents</div>
+                <ul>
+                  <li><a href="#section1">1. Section 1</a></li>
+                  <li><a href="#section2">2. Section 2</a></li>
+                </ul>
+              </div>
+              <p>{selectedArticle[1]}</p>
+              <div className="wiki-edit-history">
+                <a href="#">Edit</a> | <a href="#">View history</a>
+              </div>
             </div>
-            <List>
-              {articles.map((article, index) => (
-                <ListItem button key={index} onClick={() => handleSelectArticle(article)}>
-                  <ListItemText primary={article[0]} className="wiki-link" />
-                </ListItem>
-              ))}
-            </List>
-          </Drawer>
-        </Grid>
-        <Grid item xs={9}>
-          <Container className="wiki-content main-content" maxWidth="md">
-            {loading ? (
-              <CircularProgress />
-            ) : selectedArticle ? (
-              <div>
-                <h1>{selectedArticle[0]}</h1>
-                <p>{selectedArticle[1]}</p>
-              </div>
-            ) : (
-              <div>
-                <h2>Add New Article</h2>
-                <TextField
-                  value={newTitle}
-                  onChange={(e) => setNewTitle(e.target.value)}
-                  placeholder="Enter article title"
-                  variant="outlined"
-                  fullWidth
-                  margin="normal"
-                />
-                <TextField
-                  value={newContent}
-                  onChange={(e) => setNewContent(e.target.value)}
-                  placeholder="Enter article content"
-                  variant="outlined"
-                  fullWidth
-                  multiline
-                  rows={4}
-                  margin="normal"
-                />
-                <Button
-                  onClick={handleAddArticle}
-                  variant="contained"
-                  color="primary"
-                  disabled={loading}
-                >
-                  Add Article
-                </Button>
-                <Button
-                  onClick={handleClearArticles}
-                  variant="outlined"
-                  color="secondary"
-                  className="ml-2"
-                  disabled={loading}
-                >
-                  Clear All Articles
-                </Button>
-              </div>
-            )}
-          </Container>
-        </Grid>
-      </Grid>
+          ) : (
+            <div>
+              <h2>Add New Article</h2>
+              <TextField
+                value={newTitle}
+                onChange={(e) => setNewTitle(e.target.value)}
+                placeholder="Enter article title"
+                variant="outlined"
+                fullWidth
+                margin="normal"
+              />
+              <TextField
+                value={newContent}
+                onChange={(e) => setNewContent(e.target.value)}
+                placeholder="Enter article content"
+                variant="outlined"
+                fullWidth
+                multiline
+                rows={4}
+                margin="normal"
+              />
+              <Button
+                onClick={handleAddArticle}
+                variant="contained"
+                color="primary"
+                disabled={loading}
+              >
+                Add Article
+              </Button>
+              <Button
+                onClick={handleClearArticles}
+                variant="outlined"
+                color="secondary"
+                className="ml-2"
+                disabled={loading}
+              >
+                Clear All Articles
+              </Button>
+            </div>
+          )}
+        </Container>
+      </main>
     </div>
   );
 };

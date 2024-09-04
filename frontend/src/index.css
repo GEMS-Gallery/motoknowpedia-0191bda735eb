@@ -4,8 +4,9 @@
 
 body {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Lato', 'Helvetica', 'Arial', sans-serif;
-  background-color: #f8f9fa;
+  background-color: #ffffff;
   color: #202122;
+  line-height: 1.6;
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -17,18 +18,24 @@ h1, h2, h3, h4, h5, h6 {
 
 .wiki-content {
   font-size: 14px;
-  line-height: 1.6;
-  padding-left: 20px;
+  padding: 20px;
+  max-width: 1200px;
+  margin: 0 auto;
 }
 
 .wiki-sidebar {
   background-color: #f8f9fa;
   border-right: 1px solid #a2a9b1;
+  padding: 20px;
+  height: 100vh;
+  position: fixed;
+  width: 200px;
 }
 
 .wiki-header {
-  background-color: #eaecf0;
+  background-color: #ffffff;
   border-bottom: 1px solid #a2a9b1;
+  padding: 10px 20px;
 }
 
 .wiki-search {
@@ -38,6 +45,8 @@ h1, h2, h3, h4, h5, h6 {
 .wiki-search input {
   background-color: #fff;
   border: 1px solid #a2a9b1;
+  padding: 5px 10px;
+  width: 100%;
 }
 
 .wiki-link {
@@ -50,6 +59,61 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .main-content {
-  margin-top: 64px;
-  padding-top: 20px;
+  margin-left: 220px;
+  padding-top: 60px;
+}
+
+.wiki-logo {
+  font-size: 24px;
+  font-weight: bold;
+  color: #000;
+  text-decoration: none;
+}
+
+.wiki-article {
+  background-color: #ffffff;
+  padding: 20px;
+  border: 1px solid #a2a9b1;
+  border-radius: 2px;
+}
+
+.wiki-article h1 {
+  font-size: 28px;
+  margin-bottom: 0.5em;
+}
+
+.wiki-article p {
+  margin-bottom: 1em;
+}
+
+.wiki-toc {
+  background-color: #f8f9fa;
+  border: 1px solid #a2a9b1;
+  padding: 10px;
+  margin-bottom: 20px;
+}
+
+.wiki-toc-title {
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+.wiki-toc ul {
+  list-style-type: none;
+  padding-left: 20px;
+}
+
+.wiki-edit-history {
+  font-size: 12px;
+  color: #72777d;
+  margin-top: 10px;
+}
+
+.wiki-edit-history a {
+  color: #0645ad;
+  text-decoration: none;
+}
+
+.wiki-edit-history a:hover {
+  text-decoration: underline;
 }
